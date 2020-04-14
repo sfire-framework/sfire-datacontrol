@@ -1,0 +1,33 @@
+{
+    "name": "sfire-framework/sfire-datacontrol",
+    "description": "Library for hashing data, generation of tokens and converting/formatting strings, numbers and arrays.",
+    "keywords": [
+        "framework",
+        "sFire",
+        "hash",
+        "numbers",
+        "strings",
+        "tokens"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Kris Kuiper",
+            "email": "kris@sfire.io"
+        }
+    ],
+    "support": {
+        "docs": "https://sfire.io/docs/latest/datacontrol"
+    },
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    },
+    "autoload": {
+        "psr-4": {
+            "sFire\\DataControl\\": "./src/"
+        }
+    }
+}
