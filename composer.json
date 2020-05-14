@@ -1,6 +1,7 @@
 {
     "name": "sfire-framework/sfire-datacontrol",
     "description": "Library for hashing data, generation of tokens and converting/formatting strings, numbers and arrays.",
+    "homepage": "https://sfire.io",
     "keywords": [
         "framework",
         "sFire",
@@ -16,9 +17,6 @@
             "email": "kris@sfire.io"
         }
     ],
-    "support": {
-        "docs": "https://sfire.io/docs/latest/datacontrol"
-    },
     "require": {
         "php": ">=7.4"
     },

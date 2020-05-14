@@ -20,59 +20,68 @@ interface TranslatorInterface {
 
 
     /**
-     * Stores a new piece of data and tries to merge the data if already exists
+     * Constructor
+     * @param array $data [optional] Data that will be used for retrieving and modifying items
+     */
+    public function __construct(array &$data = []);
+
+
+    /**
+     * Set new data that will be used for retrieving and modifying items
      * @param array $data
+     * @return void
+     */
+    public function setData(array &$data): void;
+
+
+    /**
+     * Stores a new piece of data and tries to merge the data if already exists
      * @param string|array $key
      * @param mixed $value
      * @return bool if value has been set
      */
-    public function add(array &$data, $key, $value);
+    public function add($key, $value);
 
 
     /**
      * Stores a new piece of data and overwrites the data if already exists
-     * @param array $data
      * @param mixed $key
      * @param mixed $value
      * @return void
      */
-    public function set(array &$data, $key, $value): void;
+    public function set($key, $value): void;
 
 
     /**
      * Check if an item exists
-     * @param array $data
      * @param string $key
      * @return bool
      */
-    public function has(array &$data, $key): bool;
+    public function has($key): bool;
 
 
     /**
      * Remove data based on key
-     * @param array $data
      * @param mixed $key
      * @return void
      */
-    public function remove(array &$data, $key): void;
+    public function remove($key): void;
 
 
     /**
      * Retrieve data based on key
-     * @param array $data
      * @param mixed $key
      * @param mixed $default A default value which will be returned if the key is not found
      * @return mixed
      */
-    public function get(array &$data, $key, $default = null);
+    public function get($key, $default = null);
 
 
     /**
      * Retrieve and delete an item
-     * @param array $data
      * @param string|array $key
      * @param mixed $default A default value which will be returned if the key is not found
      * @return mixed
      */
-    public function pull(array &$data, $key, $default);
+    public function pull($key, $default);
 }

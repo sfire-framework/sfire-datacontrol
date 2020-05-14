@@ -11,7 +11,12 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 use sFire\DataControl\Hash;
+use sFire\DataControl\Exception\InvalidArgumentException;
 
+
+/**
+ * Class HashTest
+ */
 final class HashTest extends TestCase {
 
 
@@ -50,7 +55,7 @@ final class HashTest extends TestCase {
      */
     public function testSettingNonExistingAlgorithms(): void {
         
-        $this -> expectException(ErrorException :: class);
+        $this -> expectException(InvalidArgumentException::class);
         $this -> hash -> setAlgorithm('non-existing');
     }
 

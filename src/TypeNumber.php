@@ -13,10 +13,10 @@ namespace sFire\DataControl;
 
 
 /**
- * Class Numbers
+ * Class TypeNumber
  * @package sFire\DataControl
  */
-class Numbers {
+class TypeNumber {
 	
 
 	/**
@@ -28,7 +28,7 @@ class Numbers {
 
 	/**
 	 * Constructor
-	 * @param mixed $data
+	 * @param mixed $data A string or number that will be used to extract/modify the numbers in it
 	 */
 	public function __construct($data = null) {
 
@@ -39,7 +39,7 @@ class Numbers {
 
 
 	/**
-	 * Returns current number
+	 * Returns current value
 	 * @return mixed
 	 */
 	public function __toString() {
@@ -48,7 +48,7 @@ class Numbers {
 
 
 	/**
-	 * Returns current number
+	 * Returns current value
 	 * @return mixed
 	 */
 	public function get() {
@@ -136,7 +136,7 @@ class Numbers {
 	 */
 	public function strip(): array {
 
-		if(preg_match_all('#([0-9.,\-]+)#', (string) $this -> data, $numbers)) {
+		if(true === (bool) preg_match_all('#([0-9.,\-]+)#', (string) $this -> data, $numbers)) {
 			return $numbers[1];
 		}
 
@@ -172,7 +172,7 @@ class Numbers {
 	public function format(int $decimals = 2, string $point = '.', string $thousands_sep = ',', string $currency = null): self {
 
 		return $this -> convert(function($number, $decimals, $point, $thousands_sep, $currency) {
-			return ($currency ?: $currency) . number_format($number, $decimals, $point, $thousands_sep);
+			return $currency . number_format($number, $decimals, $point, $thousands_sep);
 		}, [$decimals, $point, $thousands_sep, $currency]);
 	}
 
@@ -185,7 +185,7 @@ class Numbers {
 	 */
 	private function convert(callable $callback, array $variables = []): self {
 
-		$this -> data = preg_replace_callback('~[0-9.,]+~', function($number) use ($callback, $variables) {
+		$this -> data = preg_replace_callback('~[0-9.,-]+~', function($number) use ($callback, $variables) {
 			return call_user_func_array($callback, array_merge([(float) str_replace(',', '', $number[0])], $variables));
 		}, $this -> data);
 

@@ -16,95 +16,90 @@ namespace sFire\DataControl\Translators;
  * Class ArrayTranslator
  * @package sFire\DataControl
  */
-class ArrayTranslator implements TranslatorInterface {
+class ArrayTranslator extends TranslatorAbstract {
 
 
     /**
      * Stores a new piece of data and tries to merge the data if already exists
-     * @param array $data
      * @param string|array $key
      * @param mixed $value
      * @return void
      */
-    public function add(array &$data, $key, $value = null): void {
+    public function add($key, $value = null): void {
 
         if(true === is_array($key)) {
 
-            $data = array_replace_recursive($key, $data);
+            $this -> data = array_replace_recursive($key, $this -> data);
             return;
         }
 
-        if(true === isset($data[$key]) && true === is_array($data[$key])) {
+        if(true === isset($this -> data[$key]) && true === is_array($this -> data[$key])) {
 
             if(true === is_array($value)) {
-                $data[$key] = array_replace_recursive($data[$key], $value);
+                $this -> data[$key] = array_replace_recursive($this -> data[$key], $value);
             }
             else {
-                $data[$key][] = $value;
+                $this -> data[$key][] = $value;
             }
 
             return;
         }
 
-        $data[$key] = $value;
+        $this -> data[$key] = $value;
     }
 
 
     /**
      * Stores a new piece of data and overwrites the data if already exists
-     * @param array $data
      * @param mixed $key
      * @param mixed $value
      * @return void
      */
-    public function set(array &$data, $key, $value = null): void {
+    public function set($key, $value = null): void {
 
-        $this -> remove($data, $key);
-        $this -> add($data, $key, $value);
+        $this -> remove($key);
+        $this -> add($key, $value);
     }
 
 
     /**
      * Check if an item exists
-     * @param $data
      * @param mixed $key
      * @return bool
      */
-    public function has(array &$data, $key): bool {
+    public function has($key): bool {
         return null !== static :: get($key, null);
     }
 
 
     /**
      * Remove data based on key
-     * @param $data
      * @param mixed $key
      * @return void
      */
-    public function remove(&$data, $key): void {
+    public function remove($key): void {
 
         if(true === is_array($key)) {
 
-            $data = array_diff_assoc($key, $data);
+            $this -> data = array_diff_assoc($key, $this -> data);
             return;
         }
 
-        unset($data[$key]);
+        unset($this -> data[$key]);
     }
 
 
     /**
      * Retrieve data based on key. Returns $default if not exists
-     * @param array $data
      * @param mixed $key
      * @param mixed $default
      * @return mixed
      */
-    public function get(array &$data, $key, $default = null) {
+    public function get($key, $default = null) {
 
         if(true === is_array($key)) {
 
-            $tmp = $data;
+            $tmp = $this -> data;
 
             foreach($key as $index) {
 
@@ -118,8 +113,8 @@ class ArrayTranslator implements TranslatorInterface {
             return $tmp;
         }
 
-        if(true === isset($data[$key])) {
-            return [$data[$key]];
+        if(true === isset($this -> data[$key])) {
+            return [$this -> data[$key]];
         }
 
         return $default;
@@ -128,18 +123,17 @@ class ArrayTranslator implements TranslatorInterface {
 
     /**
      * Retrieve and delete an item. Returns $default if not exists
-     * @param array $data
      * @param string|array $key
      * @param mixed $default A default value which will be returned if the key is not found
      * @return mixed
      */
-    public function pull(array &$data, $key, $default = null) {
+    public function pull($key, $default = null) {
 
         if(true === is_string($key)) {
             $key = [$key];
         }
 
-        $tmp 	=& $data;
+        $tmp 	=& $this -> data;
         $amount = count($key);
         $value 	= $default;
 
@@ -162,37 +156,5 @@ class ArrayTranslator implements TranslatorInterface {
         }
 
         return $value ?? $default;
-    }
-
-
-    /**
-     * Searches the given data array for values based on a string path returns theses values with the corresponding paths
-     * @param array $data An array with data
-     * @param string $key The path as an string to search for
-     * @return mixed
-     */
-    public function path(array &$data, string $key) {
-        return $this -> paths($data, $key);
-    }
-
-
-    public function paths(array &$data, $key) {
-
-        $tmp = $data;
-        $path = [];
-
-        if(false === is_array($key)) {
-            $key = [$key];
-        }
-
-        foreach($key as $item) {
-
-            if(true === isset($tmp[$item])) {
-                $tmp = $tmp[$item];
-                $path[] = $item;
-            }
-        }
-
-        return [['value' => $tmp, 'path' => $path]];
     }
 }

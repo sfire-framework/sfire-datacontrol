@@ -21,11 +21,11 @@ class Token {
 
 	/**
 	 * Create random token
-	 * @param int $length The length of the token
-	 * @param bool $numbers TRUE if token may have numbers, FALSE if not
-	 * @param bool $letters TRUE if token may have letters, FALSE if not
-	 * @param bool $capitals TRUE if token may have capital letters, FALSE if not
-	 * @param bool $symbols TRUE if token may have symbols, FALSE if not
+	 * @param int $length [optional] The length of the token
+	 * @param bool $numbers [optional] True if token may have numbers, false if not
+	 * @param bool $letters [optional] True if token may have letters, false if not
+	 * @param bool $capitals [optional] True if token may have capital letters, false if not
+	 * @param bool $symbols [optional] True if token may have symbols, false if not
 	 * @return string
 	 */
 	public static function create(?int $length = 16, bool $numbers = true, bool $letters = true, bool $capitals = true, bool $symbols = false): string {

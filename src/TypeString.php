@@ -13,32 +13,32 @@ namespace sFire\DataControl;
 
 
 /**
- * Class Strings
+ * Class TypeString
  * @package sFire\DataControl
  */
-class Strings {
+class TypeString {
 
 
 	/**
-	 * Converts string underscores and spaces to camelCase
+	 * Converts string to camelCase
 	 * @param string $string The string that needs to be converted
 	 * @return string
 	 */
 	public static function toCamelCase(string $string): string {
 
-	    $str = static :: toPascalCase($string);
+	    $string = static :: toPascalCase($string);
 
-	    if(strlen($str) > 0) {
-            $str[0] = strtolower($str[0]);
+	    if(strlen($string) > 0) {
+            $string[0] = strtolower($string[0]);
         }
 
-        return $str;
+        return $string;
 	}
 
 
     /**
-     * Converts string underscores and spaces to PascalCase
-     * @param string $string
+     * Converts string to PascalCase
+     * @param string $string The string that needs to be converted
      * @return string
      */
     public static function toPascalCase(string $string): string {
@@ -47,11 +47,25 @@ class Strings {
 
 
 	/**
-	 * Converts string camelcase to snake case
+	 * Converts string to snake case
 	 * @param string $string The string that needs to be converted
 	 * @return string
 	 */
 	public static function toSnakeCase(string $string): string {
-		return ltrim(strtolower(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '_$0', $string)), '_');
+
+        $string = preg_replace('#[ -]#', '_', $string);
+		$string = strtolower(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '_$0', $string));
+
+		return trim(preg_replace('#[_]{2,}#', '_', $string), '_');
 	}
+
+
+    /**
+     * Converts string to kebab case
+     * @param string $string The string that needs to be converted
+     * @return string
+     */
+    public static function toKebabCase(string $string): string {
+        return str_replace('_', '-', self :: toSnakeCase($string));
+    }
 }
