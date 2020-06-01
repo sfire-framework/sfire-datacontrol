@@ -7,6 +7,8 @@
  * @license   http://sfire.io/license BSD 3-CLAUSE LICENSE
  */
 
+declare(strict_types=1);
+
 namespace sFire\DataControl;
 
 
