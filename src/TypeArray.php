@@ -20,16 +20,17 @@ class TypeArray {
 
 
     /**
+     * Inserts element into a multidimensional array by giving an array path which represents the path (depth) to the value
      * @param $array
      * @param array $keys
      * @param $value
      * @return void
      */
-    public static function insertIntoArray(&$array, array $keys, $value): void {
+    public static function insertIntoArray(&$array, array $path, $value): void {
 
-        $last = array_pop($keys);
+        $last = array_pop($path);
 
-        foreach($keys as $key) {
+        foreach($path as $key) {
 
             if(false === array_key_exists($key, $array) || true === array_key_exists($key, $array) && false === is_array($array[$key])) {
                 $array[$key] = [];
@@ -55,7 +56,7 @@ class TypeArray {
 
 
     /**
-     * Flip values
+     * Flips values of a multidimensional array
      * @param array $result
      * @param array $keys
      * @param mixed $value
@@ -84,6 +85,29 @@ class TypeArray {
             }
 
             $result = array_replace_recursive($result, $res);
+        }
+    }
+
+
+    /**
+     * Removes element from a multidimensional array by giving an array path which represents the path (depth) to the value
+     * @param $array
+     * @param array $path
+     * @return void
+     */
+    public static function removeFromArray(&$array, array $path): void {
+
+        $previous = null;
+        $tmp      = &$array;
+
+        foreach($path as &$node) {
+
+            $previous = &$tmp;
+            $tmp      = &$tmp[$node];
+        }
+
+        if(null !== $previous) {
+            unset($previous[$node]);
         }
     }
 }
