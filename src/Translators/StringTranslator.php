@@ -284,6 +284,8 @@ class StringTranslator extends TranslatorAbstract {
                 $result = $this -> paths($match, $value, $path);
 
                 if(null === $result) {
+
+                    array_pop($path);
                     continue;
                 }
 
