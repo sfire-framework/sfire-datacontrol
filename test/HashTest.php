@@ -29,7 +29,7 @@ final class HashTest extends TestCase {
 
     /**
      * Setup. Created new Hash instance
-     * @return voidw
+     * @return void
      */
     protected function setUp(): void {
         $this -> hash = new Hash();

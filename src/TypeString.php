@@ -19,21 +19,21 @@ namespace sFire\DataControl;
 class TypeString {
 
 
-	/**
-	 * Converts string to camelCase
-	 * @param string $string The string that needs to be converted
-	 * @return string
-	 */
-	public static function toCamelCase(string $string): string {
+    /**
+     * Converts string to camelCase
+     * @param string $string The string that needs to be converted
+     * @return string
+     */
+    public static function toCamelCase(string $string): string {
 
-	    $string = static :: toPascalCase($string);
+        $string = static :: toPascalCase($string);
 
-	    if(strlen($string) > 0) {
+        if(strlen($string) > 0) {
             $string[0] = strtolower($string[0]);
         }
 
         return $string;
-	}
+    }
 
 
     /**
@@ -46,18 +46,18 @@ class TypeString {
     }
 
 
-	/**
-	 * Converts string to snake case
-	 * @param string $string The string that needs to be converted
-	 * @return string
-	 */
-	public static function toSnakeCase(string $string): string {
+    /**
+     * Converts string to snake case
+     * @param string $string The string that needs to be converted
+     * @return string
+     */
+    public static function toSnakeCase(string $string): string {
 
         $string = preg_replace('#[ -]#', '_', $string);
-		$string = strtolower(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '_$0', $string));
+        $string = strtolower(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '_$0', $string));
 
-		return trim(preg_replace('#[_]{2,}#', '_', $string), '_');
-	}
+        return trim(preg_replace('#[_]{2,}#', '_', $string), '_');
+    }
 
 
     /**
